@@ -28,12 +28,20 @@ class World(GameObject):
         pygame.draw.line(self.surface, (0, 0, 0), (w / 2 + w / 10, 0), (w / 2 + w / 10, h))
 
 
-in_allowed_rec_w = lambda w: (w > 0 and w < 2 * WINDOW_WIDTH / 5) or (w > 3 * WINDOW_WIDTH / 5 and w < WINDOW_WIDTH)
-in_allowed_rec_h = lambda h: (h > 0 and h < WINDOW_HEIGHT)
+def in_allowed_rec_w(w):
+    return (0 < w < 2 * WINDOW_WIDTH / 5) or (3 * WINDOW_WIDTH / 5 < w < WINDOW_WIDTH)
 
-in_allowed_rec = lambda p: in_allowed_rec_w(p[0]) and in_allowed_rec_h(p[1])
 
-in_window = lambda p: p[0] > 0 and p[0] < WINDOW_WIDTH and p[1] > 0 and p[1] < WINDOW_HEIGHT
+def in_allowed_rec_h(h):
+    return 0 < h < WINDOW_HEIGHT
+
+
+def in_allowed_rec(p):
+    return in_allowed_rec_w(p[0]) and in_allowed_rec_h(p[1])
+
+
+def in_window(p):
+    return 0 < p[0] < WINDOW_WIDTH and 0 < p[1] < WINDOW_HEIGHT
 
 
 class Character(GameObject):
@@ -93,13 +101,13 @@ class Character(GameObject):
 
 
 class Ball(GameObject):
-    def __init__(self, dir, *args, **kwargs):
+    def __init__(self, direction, *args, **kwargs):
         super(Ball, self).__init__(*args, **kwargs)
 
-        self.dir = dir
+        self.direction = direction
 
     def on_update(self):
-        n_pos = int(self.dir[0] * V_BALL + self.pos[0]), int(self.dir[1] * V_BALL + self.pos[1])
+        n_pos = int(self.direction[0] * V_BALL + self.pos[0]), int(self.direction[1] * V_BALL + self.pos[1])
         if in_window(n_pos):
             self.pos = n_pos[:]
         else:

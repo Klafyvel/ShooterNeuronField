@@ -6,7 +6,7 @@ class Neuron:
         self.entry = entry
         self.output = output
         self.W = w
-        self.to_be_send = None
+        self.to_be_send = 0
 
     def update(self, v):
         self.to_be_send = 0

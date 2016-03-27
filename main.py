@@ -9,7 +9,6 @@ from settings import *
 class App:
     def __init__(self, window):
         self.window = window
-        # pygame.mouse.set_visible(False)
         pygame.key.set_repeat(20, 20)
 
         self.running = False
