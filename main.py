@@ -62,14 +62,23 @@ class App:
         if e.type == QUIT:
             self.running = False
         elif e.type == KEYDOWN:
-            if e.key == K_UP:
-                self.objects[1].forward()
-            elif e.key == K_LEFT:
-                self.objects[1].turn_left()
-            elif e.key == K_RIGHT:
-                self.objects[1].turn_right()
-            elif e.key == K_SPACE:
-                self.objects[1].shoot()
+            pass
+
+    def manage_keys(self):
+        """
+        Handles the keys events.
+        :return: None
+        """
+        keys = pygame.key.get_pressed()
+        if keys[K_UP]:
+            self.objects[1].forward()
+        if keys[K_LEFT]:
+            self.objects[1].turn_left()
+        if keys[K_RIGHT]:
+            self.objects[1].turn_right()
+        if keys[K_SPACE]:
+            self.objects[1].shoot()
+
 
     def on_update(self):
         """
@@ -86,8 +95,9 @@ class App:
         """
         self.running = True
         while self.running:
-            for event in pygame.event.get():
-                self.on_event(event)
+            for e in pygame.event.get():
+                self.on_event(e)
+            self.manage_keys()
 
             self.on_update()
             self.on_render()
