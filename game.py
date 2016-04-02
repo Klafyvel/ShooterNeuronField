@@ -91,7 +91,8 @@ class Character(GameObject):
 
         self.field_angle = 30
 
-        self.timer = pygame.time.Clock()
+        self.timer_shoot = pygame.time.Clock()
+        self.timer_shoot.tick()
 
         self.color = character_color
 
@@ -141,10 +142,9 @@ class Character(GameObject):
         :param v: Shoots only if v >= 1
         :return: None
         """
-        if v <= 1:
+        if v < 1:
             return
-        self.timer.tick()
-        if self.timer.get_time() >= BALL_SHOOT_PERIOD:
+        if self.timer_shoot.tick() >= BALL_SHOOT_PERIOD:
             vec = cos(radians(self.angle)), sin(radians(self.angle))
             self.app.add_object(Ball(vec, pos=self.pos, app=self.app))
 
